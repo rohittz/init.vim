@@ -1,6 +1,7 @@
 call plug#begin("~/.vim/plugged")
   " Theme
   Plug 'dracula/vim'
+  Plug 'cocopon/iceberg.vim'
 
   " Language Client
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -24,6 +25,16 @@ call plug#begin("~/.vim/plugged")
   Plug 'kien/ctrlp.vim'
   "vim-airline"
   Plug 'vim-airline/vim-airline'
+  "vim-airline themes"
+  Plug 'vim-airline/vim-airline-themes' " themes for vim-airline
+  "vim-autoformat"
+  Plug 'Chiel92/vim-autoformat'
+  "limelight "
+  Plug 'junegunn/limelight.vim'
+  "emmet vim"
+  Plug 'mattn/emmet-vim', { 'for': 'html' }
+  "surround"
+  Plug 'tpope/vim-surround'
 call plug#end()
 
 " Enable theming support
@@ -33,7 +44,8 @@ endif
 
 " Theme
 syntax enable
-colorscheme dracula
+
+colorscheme iceberg
 
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
@@ -54,14 +66,55 @@ let g:fzf_action = {
 " used to ignore gitignore files
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
+set nocompatible            " not compatible with vi
+set autoread                " detect when a file is changed
+
+set history=1000            " change history to 1000
+set textwidth=80
+set background=dark
+set wrap                    " turn on line wrapping
+set linebreak               " set soft wrapping
+set autoindent              " automatically set indent of new line
+set smartindent
 " open new split panes to right and below
 set splitright
 set splitbelow
 
 " setting up tab
-set tabstop =8
+set tabstop =4
 set softtabstop =4
 set shiftwidth =4
+
+" code folding settings
+set foldmethod=syntax       "fold based on indent // syntax
+set foldnestmax=10          " deepest fold is 10 levels
+" set nofoldenable            " don't fold by default
+set foldlevel=1
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+"set autoindent
+set autoindent
+
+set ttyfast                 " faster redrawing
+set diffopt+=vertical
+
+set wildmenu                " enhanced command line completion
+" Searching
+set ignorecase              " case insensitive searching
+set smartcase               " case-sensitive if expresson contains a capital letter
+set hlsearch                " highlight search results
+set incsearch               " set incremental search, like modern browsers
+
+" error bells
+set noerrorbells
+" scroll the viewport faster
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+" autosave feature : needs some 3 seconds of cursor holding to save 
+autocmd CursorHold,CursorHoldI * update
 
 "setting line
 set number
