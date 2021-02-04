@@ -80,6 +80,7 @@ set wrap                    " turn on line wrapping
 set linebreak               " set soft wrapping
 set autoindent              " automatically set indent of new line
 set smartindent
+set cursorline
 " open new split panes to right and below
 set splitright
 set splitbelow
@@ -114,7 +115,7 @@ set incsearch               " set incremental search, like modern browsers
 " setup prettier
 command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
 " Run Autoformat on save
-:autocmd BufWritePost * !Autoformat <afile>
+:autocmd BufWritePost * Autoformat <afile>
 " To choose partcular languages: edit the coc-setting.json
 " error bells
 set noerrorbells
@@ -129,7 +130,7 @@ autocmd CursorHold,CursorHoldI * update
 set number
 imap jj <ESC>
 " turn terminal to normal mode with escape
-tnoremap <Esc> <C-\><C-n>
+tnoremap <ESC> <C-\><C-n>
 
 " use alt+hjkl to move between split/vsplit panels
 tnoremap <A-h> <C-\><C-n><C-w>h
