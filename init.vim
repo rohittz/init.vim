@@ -2,15 +2,14 @@ call plug#begin("~/.vim/plugged")
   " Theme
   Plug 'dracula/vim'
   Plug 'cocopon/iceberg.vim'
-
   " Language Client
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
   " TypeScript Highlighting
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
-
-
+  "browserlink.vim"
+  Plug 'jaxbot/browserlink.vim'
   " File Explorer with Icons
   Plug 'scrooloose/nerdtree'
   Plug 'ryanoasis/vim-devicons'
@@ -33,8 +32,12 @@ call plug#begin("~/.vim/plugged")
   Plug 'junegunn/limelight.vim'
   "emmet vim"
   Plug 'mattn/emmet-vim', { 'for': 'html' }
-  "surround"
+  let g:user_emmet_leader_key=','
+    "surround"
   Plug 'tpope/vim-surround'
+  "setting up python2,3  and pynvim"
+  let g:python3_host_prog = '/usr/bin/python2' "python2
+  let g:python3_host_prog = '/usr/bin/python3' "python3
 call plug#end()
 
 " Enable theming support
@@ -107,6 +110,9 @@ set smartcase               " case-sensitive if expresson contains a capital let
 set hlsearch                " highlight search results
 set incsearch               " set incremental search, like modern browsers
 
+" setup prettier
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+" To choose partcular languages: edit the coc-setting.json 
 " error bells
 set noerrorbells
 " scroll the viewport faster
