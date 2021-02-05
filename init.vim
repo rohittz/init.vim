@@ -81,6 +81,8 @@ set linebreak               " set soft wrapping
 set autoindent              " automatically set indent of new line
 set smartindent
 set cursorline
+" Not to put new comment after a comment by default [ all files]
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 " open new split panes to right and below
 set splitright
 set splitbelow
