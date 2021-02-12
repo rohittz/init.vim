@@ -4,15 +4,20 @@ Plug 'cocopon/iceberg.vim'
 
 "------- coc/Language Client
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
-
-"------- TypeScript Highlighting
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-
-"------- File Explorer with Icons
+let g:coc_global_extensions = ['coc-python', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-tsserver', 'coc-snippets', 'coc-spell-checker']
+"------ nerdTree
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
+"------- ALE
+Plug 'dense-analysis/ale'
+let g:ale_fixers = {
+			\ 'javascript': ['eslint'],
+			\ 'css': ['prettier'],
+			\ 'html': ['prettier'],
+			\ }
+let g:ale_fix_on_save = 1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '●'
 
 "------- File Search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -38,7 +43,7 @@ Plug 'vim-airline/vim-airline-themes'
 "-------vim-autoformat
 Plug 'Chiel92/vim-autoformat'
 
-"-------limelight 
+"-------limelight
 Plug 'junegunn/limelight.vim'
 
 "-------emmet vim
@@ -67,12 +72,12 @@ let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
-" Automaticaly close nvim if NERDTree is only thing left open
+" Automatically close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " used to ignore gitignore files
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
-"------- set 
+"------- set
 set nocompatible            " not compatible with vi
 set autoread                " detect when a file is changed
 set history=1000            " change history to 1000
@@ -116,6 +121,20 @@ set noerrorbells
 
 "setting line
 set number
+
+"setting for coc-snippets
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Run Autoformat on save
 :autocmd BufWritePost * Autoformat <afile>
@@ -191,7 +210,7 @@ nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 
-""""""""""esc to go to normal mode in terminal 
+""""""""""esc to go to normal mode in terminal
 tnoremap <ESC> <C-\><C-n>
 
 """"""""""go to the next line[oo], but not switch to insert mode
