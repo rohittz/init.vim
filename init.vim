@@ -4,7 +4,7 @@ Plug 'cocopon/iceberg.vim'
 
 "------- coc/Language Client
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-python', 'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-tsserver', 'coc-snippets', 'coc-spell-checker']
+let g:coc_global_extensions = ['coc-python', 'coc-css', 'coc-html', 'coc-json', 'coc-tsserver', 'coc-snippets', 'coc-spell-checker']
 "------ nerdTree
 Plug 'scrooloose/nerdtree'
 Plug 'ryanoasis/vim-devicons'
@@ -160,6 +160,16 @@ function! s:check_back_space() abort
 endfunction
 
 "------- coc setting
+" if hidden is not set, TextEdit might fail
+set hidden
+set nobackup
+set nowritebackup
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn= yes
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " Add (Neo)Vim's native statusline support.
