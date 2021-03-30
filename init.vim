@@ -167,7 +167,6 @@ set nowritebackup
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
-set signcolumn= yes
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 " Highlight the symbol and its references when holding the cursor.
@@ -224,7 +223,8 @@ nnoremap <A-l> <C-w>l
 tnoremap <ESC> <C-\><C-n>
 
 """"""""""go to the next line[oo], but not switch to insert mode
-nmap oo o<Esc>k
+""""" This is making neovim slow, as it waiting for next input to check if this is o,
+"nmap oo o<Esc>k
 
 """"""""""coc mapping
 " Use tab for trigger completion with characters ahead and navigate.
