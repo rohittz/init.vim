@@ -34,14 +34,15 @@ let g:indent_guides_enable_on_vim_startup = 1
 "-------kien/ctrlp.vim
 Plug 'kien/ctrlp.vim'
 
+"------- vim-autoformat
+Plug 'Chiel92/vim-autoformat'
+let g:python3_host_prog = '/usr/bin/python3' "python3
 "-------vim-airline
 Plug 'vim-airline/vim-airline'
 
 "-------vim-airline themes
 Plug 'vim-airline/vim-airline-themes'
 
-"-------vim-autoformat
-Plug 'Chiel92/vim-autoformat'
 
 "-------limelight
 Plug 'junegunn/limelight.vim'
@@ -52,10 +53,10 @@ let g:user_emmet_leader_key=','
 
 "-------surround
 Plug 'tpope/vim-surround'
+"------- auto-pairs
+Plug 'jiangmiao/auto-pairs'
 
 "-------setting up python2,3  and pynvim
-let g:python3_host_prog = '/usr/bin/python2' "python2
-let g:python3_host_prog = '/usr/bin/python3' "python3
 call plug#end()
 
 " Enable theming support
@@ -123,7 +124,7 @@ set noerrorbells
 set number
 
 "setting for coc-snippets
-inoremap <silent><expr> <TAB>
+noremap <silent><expr> <TAB>
 			\ pumvisible() ? coc#_select_confirm() :
 			\ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
 			\ <SID>check_back_space() ? "\<TAB>" :
@@ -136,8 +137,6 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
-" Run Autoformat on save
-:autocmd BufWritePost * Autoformat <afile>
 " To choose partcular languages: edit the coc-setting.json
 
 " autosave feature : needs some 3 seconds of cursor holding to save
@@ -145,7 +144,7 @@ autocmd CursorHold,CursorHoldI * update
 
 
 " start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+:au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 " uses zsh instead of bash
 function! OpenTerminal()
@@ -177,6 +176,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "-_-_-_-_-_-_-_-_-_-_-_-_-_-_ overwrite mapping or new mapping
+" formatting on save
+au BufWrite * :Autoformat
 
 """"""""""nerdtree mapping
 " toggle nerdtree
@@ -266,4 +267,12 @@ function! s:show_documentation()
 	endif
 endfunction
 
+"setting keymap to refresh init.vim
+nnoremap <leader>sv :source $MYVIMRC<CR>
+" integrating clang-format in vim
+function! Formatonsave()
+	let l:formatdiff = 1
+	pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
+endfunction
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
