@@ -37,6 +37,7 @@ Plug 'kien/ctrlp.vim'
 "------- vim-autoformat
 Plug 'Chiel92/vim-autoformat'
 let g:python3_host_prog = '/usr/bin/python3' "python3
+let g:python2_host_prog = '/usr/bin/python2' "python2
 "-------vim-airline
 Plug 'vim-airline/vim-airline'
 
@@ -79,6 +80,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 "------- set
+" setting hubrid line number
+set number relativenumber
+set nu rnu
 set nocompatible            " not compatible with vi
 set autoread                " detect when a file is changed
 set history=1000            " change history to 1000
@@ -86,9 +90,9 @@ set textwidth=80
 set background=dark
 set wrap                    " turn on line wrapping
 set linebreak               " set soft wrapping
-set autoindent              " automatically set indent of new line
-set smartindent
+set autoindent              " automatically set indent of new line set smartindent
 set cursorline
+set showmatch "highlight matching brackets"
 set colorcolumn=80          " show a guideline for following 80cha rule
 " Not to put new comment after a comment by default [ all files]
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -144,7 +148,7 @@ autocmd CursorHold,CursorHoldI * update
 
 
 " start terminal in insert mode
-:au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+autocmd BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 " uses zsh instead of bash
 function! OpenTerminal()
@@ -177,7 +181,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 "-_-_-_-_-_-_-_-_-_-_-_-_-_-_ overwrite mapping or new mapping
 " formatting on save
-au BufWrite * :Autoformat
+"autocmd BufWrite *.c :AutoFormat
 
 """"""""""nerdtree mapping
 " toggle nerdtree
@@ -197,11 +201,11 @@ let g:fzf_action = {
 """"""""""folding mapping
 " set nofoldenable
 " don't fold by default
-set foldlevel=1
-inoremap <F9> <C-O>za
-nnoremap <F9> za
-onoremap <F9> <C-C>za
-vnoremap <F9> zf
+"set foldlevel=1
+"inoremap <F9> <C-O>za
+"nnoremap <F9> za
+"onoremap <F9> <C-C>za
+"vnoremap <F9> zf
 
 """"""""""scrolling the viewport faster
 nnoremap <C-e> 3<C-e>
@@ -272,7 +276,11 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 " integrating clang-format in vim
 function! Formatonsave()
 	let l:formatdiff = 1
-	pyf ~/llvm/tools/clang/tools/clang-format/clang-format.py
+	pyf /usr/bin/clang-format
 endfunction
-autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+" autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+" autocmd FileType c,cpp setlocal equalprg=clang-format
 
+"auto command for compiling c/c++
+autocmd filetype c nnoremap <F4> :w <bar> exec '!gcc '.shellescape('%').' -o '.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+autocmd filetype cpp nnoremap <F4> :w<bar>term ++shell g++ %:p -o %:p:r && %:p:r<CR>

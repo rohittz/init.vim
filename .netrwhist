@@ -1,4 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =2
+let g:netrw_dirhistcnt =3
+let g:netrw_dirhist_3='/home/rohit/CP/713'
 let g:netrw_dirhist_2='/home/rohit/Courses/web/milestones/mile05_intermediateJS/module23/advanced-javascript'
 let g:netrw_dirhist_1='/home/rohit/Courses/web/milestones/mile04_Integrate_JS'
