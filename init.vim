@@ -1,6 +1,7 @@
 call plug#begin("~/.vim/plugged")
 "------- Theme
 Plug 'cocopon/iceberg.vim'
+Plug 'morhetz/gruvbox'
 
 "------- coc/Language Client
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -26,10 +27,15 @@ Plug 'junegunn/fzf.vim'
 "------- css-color
 Plug 'ap/vim-css-color'
 
-"-------nathanaelkane/vim-indent-guides
-Plug 'nathanaelkane/vim-indent-guides'
+"------- vim indent guides
+Plug 'Yggdroot/indentLine'
+let g:indentLine_char = '¦'
+let g:indentLine_color_term = 245
+" Plug 'nathanaelkane/vim-indent-guides'
 " starting it in startup
-let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_enable_on_vim_startup = 1
+"------- vim indent line 2
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 "-------kien/ctrlp.vim
 Plug 'kien/ctrlp.vim'
@@ -67,7 +73,8 @@ endif
 
 " Theme
 syntax enable
-colorscheme iceberg
+" colorscheme iceberg
+autocmd vimenter * ++nested colorscheme gruvbox
 
 "------- NERDTree setting
 let g:NERDTreeShowHidden = 1
