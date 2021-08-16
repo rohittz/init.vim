@@ -125,6 +125,9 @@ endif
         autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 "------- set
+setlocal spell
+set spelllang=en_us
+inoremap <C-i> <C-g>u<Esc>[s1z=`]a<C-g>u
 set nocompatible
 "----- Chnaging colors to adapt with 16 colors
     set notermguicolors
@@ -279,4 +282,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " select whole content using ctrl-a
 map <C-a> <esc>ggVG<CR>
+" Inkscape set up with vimtex
+inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
