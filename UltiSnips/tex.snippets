@@ -8,14 +8,60 @@ def env(name):
 	return x != '0' and y != '0'
 endglobal
 
+snippet temp_book "Basic template" b
+\documentclass[a4paper, twoside, openany, 12pt, fleqn]{book}
 
-snippet template "Basic template" b
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage[english]{babel}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=25mm,
+ top=25mm,
+ right=25mm,
+ bottom=25mm
+ }
+
+
+% figure support
+\usepackage{import}
+\usepackage{xifthen}
+\pdfminorversion=7
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[1]{%
+	\def\svgwidth{\columnwidth}
+	\import{./figures/}{#1.pdf_tex}
+}
+
+\pdfsuppresswarningpagegroup=1
+\pagestyle{headings}
+% Additional shapes and formatting
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\graphicspath{{./}}
+\usepackage{multicol}
+\setlength{\parindent}{4em}
+\setlength{\parskip}{1em}
+
+\begin{document}
+\tableofcontents
+	$0
+\end{document}
+endsnippet
+
+
+snippet temp_article "Basic template" b
 \documentclass[a4paper,11pt]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{textcomp}
-\usepackage[dutch]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath, amssymb}
 \usepackage{geometry}
  \geometry{
@@ -46,6 +92,9 @@ snippet template "Basic template" b
 \end{document}
 endsnippet
 
+snippet chp "chapter" i
+\chapter{$0}
+endsnippet
 snippet sign "Signature"
 Yours sincerely, 
 
@@ -63,6 +112,10 @@ snippet box "Box"
 $0
 endsnippet
 
+snippet btx "boldtext"
+\textbf{$0}
+endsnippet
+
 snippet beg "begin{} / end{}" bA
 \begin{$1}
 	$0
@@ -77,7 +130,7 @@ snippet sch "Special Character" i
 \\${VISUAL}
 endsnippet
 
-snippet im "Math" wA
+snippet pf "Math" wA
 \(${1}\)`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
     snip.rv = ' '
@@ -85,11 +138,21 @@ else:
     snip.rv = ''
 `$2
 endsnippet
-snippet bm "Math" wA
+snippet wf "Math" wA
 \[${1}\]`!p
 if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
     snip.rv = ' '
 else:
     snip.rv = ''
 `$2
+endsnippet
+snippet table "Table environment" b
+\begin{table}[${1:htpb}]
+	\centering
+	\caption{${2:caption}}
+	\label{tab:${3:label}}
+	\begin{tabular}{${5:c}}
+	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
+	\end{tabular}
+\end{table}
 endsnippet

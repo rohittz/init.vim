@@ -1,10 +1,10 @@
-"------- Plugin manager : Vim plug
 call plug#begin("~/.vim/plugged")
 
-"------- Theme(NeoSolarized)
+"sudo ./install.sh------- Theme(NeoSolarized)
  Plug 'overcache/NeoSolarized'
     let g:neosolarized_contrast = "high"
     let g:neosolarized_vertSplitBgTrans = 1
+Plug 'whatyouhide/vim-gotham'
 
 "------- coc/Language Client(intellisense engine for VIM)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -68,9 +68,11 @@ Plug 'Yggdroot/indentLine'
 "-------vim-airline
 Plug 'vim-airline/vim-airline'
 
-"-------vim-airline themes
-Plug 'vim-airline/vim-airline-themes'
-    let g:airline_theme='base16'
+"-------lightline-airline themes
+ Plug 'itchyny/lightline.vim'
+ let g:lightline = {
+             \'colorscheme':'gotham',
+             \ }
 
 "-------limelight
 Plug 'junegunn/limelight.vim'
@@ -81,14 +83,12 @@ Plug 'tpope/vim-surround'
 
 "------- auto-pairs
 Plug 'jiangmiao/auto-pairs'
-
 " ------vimtex
 Plug 'lervag/vimtex'
     let g:tex_flavor = 'latex'
     let g:vimtex_view_method = 'zathura'
     let g:vimtex_quickfix_mode=0 
     set conceallevel=1
-    " set conceallevel=1
     let g:tex_conceal='abdmg'
 
 " -----ultisnips
@@ -114,7 +114,7 @@ endif
 " Theme
     set background=dark
     syntax on
-    colorscheme NeoSolarized
+    colorscheme gotham
 
 "------- NERDTree setting
     let g:NERDTreeShowHidden = 1
@@ -124,17 +124,23 @@ endif
         " Automatically close nvim if NERDTree is only thing left open
         autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+if !has('gui_running')
+  set t_Co=256
+endif
+
 "------- set
 setlocal spell
 set spelllang=en_us
+hi clear SpellBad
+hi SpellBad cterm=underline
 inoremap <C-i> <C-g>u<Esc>[s1z=`]a<C-g>u
 set nocompatible
-"----- Chnaging colors to adapt with 16 colors
+"----- Changing colors to adapt with 16 colors
     set notermguicolors
-    set t_Co=256
 "----- Hybrid line number
     set number relativenumber
     set nu rnu
+set noshowmode
 set autoread                " detect when a file is changed
 set history=1000            " change history to 1000
 set textwidth=80
@@ -286,3 +292,8 @@ map <C-a> <esc>ggVG<CR>
 inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
 nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
+set laststatus=0
+
+map <F10> :w <CR> :!g++ % <CR>
+map <F9> :w <CR> :!g++ % -o %< && ./%< <CR>
+" inoremap <C-F9> :w <CR> :!clear && g++ % -o %< && ./%< <CR>
